@@ -1,6 +1,6 @@
   <head>
     <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
+    <title>Meteor.js Example</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -22,10 +22,24 @@
           padding-left: 5px;
           padding-right: 5px;
         }
-      body {
-        padding-top: 0px;
-        padding-bottom: 0px;
+        body {
+          padding-top: 0px;
+          padding-bottom: 0px;
+        }
       }
+
+      #inputCustomerName {
+        width:  85%;
+      }
+
+      ul hr {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      textarea {
+        width: 85%;
+        min-height: 200px;
       }
     </style>
 
@@ -37,9 +51,9 @@
     <!-- Fav and touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="../assets/ico/favicon.png">
   </head>
 
   <body>
@@ -71,32 +85,70 @@
       <div class="row-fluid">
         <div class="span3">
           <div class="well sidebar-nav">
-            {{> posts}}
+            {{>customers}}
           </div><!--/.well -->
         </div><!--/span-->
         <div class="span9">
+          <!--
           <div class="hero-unit">
             <h1>Blah blah blah</h1>
             <p>blah blah blah blah blah blah blah</p>
           </div>
+          -->
           <div class="row-fluid">
             <div class="span12">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn" href="#">View details &raquo;</a></p>
+              {{>history}}
             </div><!--/span-->
           </div><!--/row-->
         </div><!--/span-->
       </div><!--/row-->
     </div><!--/.fluid-container-->
-
   </body>
 
-    <template name="posts">
-        <ul class="nav nav-list">
-            <li class="nav-header">Links</li>
-            {{#each posts}}
-              <li><a href="#">{{name}}</a></li>
-            {{/each}}
+  <template name="customers">
+      <ul class="nav nav-list">
+          <li class="nav-header">Customers</li>
+          {{#each listCustomers}}
+            <li><a href="#" data-id="{{_id}}">{{name}}</a></li>
+          {{/each}}
+          <hr>
+          <form class="form">
+            <div class="control-group">
+              <div class="controls">
+                <input type="text" id="inputCustomerName" placeholder="Customer Name">
+              </div>
+              <div class="controls">
+                <a class="btn btn-primary" href="#myModal" role="button" data-toggle="modal">Add New Customer</a>
+              </div>
+            </div>
+          </form>
+      </ul>
+  </template>
+
+  <template name="history">
+    {{#with showDetail}}
+      <h2>{{name}}</h2>
+      <p>{{_id}}</p>
+      <hr>
+        <ul>
+        {{#each history}}
+          <li>
+            <p>{{custDate}}</p>
+            <hr>
+            <p>{{custUpdate}}</p>
+          </li>
+        {{/each}}
         </ul>
-    </template>
+      <hr>
+      <form class="form">
+        <div class="control-group">
+          <div class="controls">
+            <textarea id="inputCustomerUpdate" placeholder="Update"></textarea>
+          </div>
+          <div class="controls">
+            <a class="btn btn-primary" href="#myModal" role="button" data-toggle="modal" data-id="{{_id}}" >Update</a>
+          </div>
+        </div>
+      </form>
+    {{/with}}
+  </template>
