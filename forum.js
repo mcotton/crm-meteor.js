@@ -2,12 +2,13 @@ Customers = new Meteor.Collection('customers');
 History = new Meteor.Collection('history');
 
 Meteor.methods({
-  'addNewCustomer': function(custName) {
-    return Customers.insert({ 'name': custName })
+  'addNewCustomer': function(custName, domain) {
+    return Customers.insert({ 'name': custName, 'domain': domain})
   },
-  'addCustomerUpdate': function(custID, custUpdate) {
+  'addCustomerUpdate': function(custID, custUpdate, domain) {
     var result = History.insert({ 'custID': custID,
                                   'custUpdate': custUpdate,
+                                  'domain': domain,
                                   'custDate': [new Date().toDateString(), new Date().toLocaleTimeString()].join(' ')})
     console.log('result:', result)
     return result
@@ -18,9 +19,9 @@ if (Meteor.isClient) {
     Template.customers.helpers({
         listCustomers: function() {
             if(Meteor.user() && Meteor.user().emails[0] && Meteor.user().emails[0].address) {
-                var domain = Meteor.user().emails[0].address.split('@')[1]
-                // sort results by name
-                return _.sortBy(Customers.find({'domain': 'eagleeyenetworks.com'}).fetch(), function(item) { return item.name });
+              var domain = Meteor.user().emails[0].address.split('@')[1]
+              // sort results by name
+              return _.sortBy(Customers.find({'domain': domain}).fetch(), function(item) { return item.name });
             }
         }
     })
@@ -28,8 +29,11 @@ if (Meteor.isClient) {
     Template.customers.events({
       'click .btn': function(event) {
         if($('#inputCustomerName').val().length > 0) {
-          Meteor.call('addNewCustomer', $('#inputCustomerName').val())
-          $('#inputCustomerName').val('')
+          if(Meteor.user() && Meteor.user().emails[0] && Meteor.user().emails[0].address) {
+            var domain = Meteor.user().emails[0].address.split('@')[1]
+            Meteor.call('addNewCustomer', $('#inputCustomerName').val(), domain)
+            $('#inputCustomerName').val('')
+          }
         }
       },
       'click a': function(event) {
