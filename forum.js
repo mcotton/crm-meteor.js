@@ -17,7 +17,11 @@ Meteor.methods({
 if (Meteor.isClient) {
     Template.customers.helpers({
         listCustomers: function() {
-            return Customers.find();
+            if(Meteor.user() && Meteor.user().emails[0] && Meteor.user().emails[0].address) {
+                var domain = Meteor.user().emails[0].address.split('@')[1]
+                // sort results by name
+                return _.sortBy(Customers.find({'domain': 'eagleeyenetworks.com'}).fetch(), function(item) { return item.name });
+            }
         }
     })
 
