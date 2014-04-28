@@ -109,10 +109,15 @@
 
   <template name="customers">
       <ul class="nav nav-list">
+          <li class="nav-header">Last 5 Updates</li>
+            {{#each last5Updates}}
+              <li><a href="#" data-id="{{custID}}">{{custDate}}</a></li>
+            {{/each}}
+          <hr>
           <li class="nav-header">Customers</li>
-          {{#each listCustomers}}
-            <li><a href="#" data-id="{{_id}}">{{name}}</a></li>
-          {{/each}}
+            {{#each listCustomers}}
+              <li><a href="#" data-id="{{_id}}">{{name}}</a></li>
+            {{/each}}
           <hr>
           <form class="form">
             <div class="control-group">
