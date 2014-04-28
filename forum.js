@@ -25,6 +25,7 @@ if (Meteor.isClient) {
       'click .btn': function(event) {
         if($('#inputCustomerName').val().length > 0) {
           Meteor.call('addNewCustomer', $('#inputCustomerName').val())
+          $('#inputCustomerName').val('')
         }
       },
       'click a': function(event) {
@@ -61,6 +62,7 @@ if (Meteor.isClient) {
         //console.log('data-id:', $(event.currentTarget).data('id'))
         //debugger
         Meteor.call('addCustomerUpdate', $(event.currentTarget).data('id'), $('#inputCustomerUpdate').val())
+        $('#inputCustomerUpdate').val('')
       }
     })
 }

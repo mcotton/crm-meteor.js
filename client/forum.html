@@ -38,9 +38,16 @@
       }
 
       textarea {
-        width: 85%;
-        min-height: 200px;
+        margin-left: 5%;
+        width: 90%;
+        min-height: 150px;
       }
+
+      #inputUpdateButton {
+        float:  right;
+        margin-right: 5%;
+      }
+
     </style>
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -68,8 +75,9 @@
           </button>
           <a class="brand" href="#">Blah</a>
           <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">Username</a>
+            <p class="navbar-text pull-right" style="margin-right: 137px;">
+              <!-- Logged in as <a href="#" class="navbar-link">Username</a> -->
+              {{>loginButtons}}
             </p>
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
@@ -88,13 +96,7 @@
             {{>customers}}
           </div><!--/.well -->
         </div><!--/span-->
-        <div class="span9">
-          <!--
-          <div class="hero-unit">
-            <h1>Blah blah blah</h1>
-            <p>blah blah blah blah blah blah blah</p>
-          </div>
-          -->
+        <div class="span8">
           <div class="row-fluid">
             <div class="span12">
               {{>history}}
@@ -128,7 +130,6 @@
   <template name="history">
     {{#with showDetail}}
       <h2>{{name}}</h2>
-      <p>{{_id}}</p>
       <hr>
         <ul>
         {{#each history}}
@@ -146,7 +147,8 @@
             <textarea id="inputCustomerUpdate" placeholder="Update"></textarea>
           </div>
           <div class="controls">
-            <a class="btn btn-primary" href="#myModal" role="button" data-toggle="modal" data-id="{{_id}}" >Update</a>
+            <a class="btn btn-primary" href="#myModal"
+                role="button" data-toggle="modal" data-id="{{_id}}" id="inputUpdateButton">Update</a>
           </div>
         </div>
       </form>
