@@ -139,7 +139,10 @@
         <ul>
         {{#each history}}
           <li>
-            <p>{{custDate}}</p>
+            <p>{{custDate}}
+              <a href="#"><i  data-id="{{_id}}" class="edit icon-pencil"></i></a>
+              <a href="#"><i  data-id="{{_id}}" class="remove icon-remove-sign"></i></a>
+            </p>
             <hr>
             <p>{{custUpdate}}</p>
           </li>

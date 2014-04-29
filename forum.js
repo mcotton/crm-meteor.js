@@ -82,6 +82,16 @@ if (Meteor.isClient) {
         //debugger
         Meteor.call('addCustomerUpdate', $(event.currentTarget).attr('data-id'), $('#inputCustomerUpdate').val())
         $('#inputCustomerUpdate').val('')
+      },
+      'click .edit': function(event) {
+        console.log('data-id:', $(event.currentTarget).attr('data-id'))
+        //debugger
+        //History.remove({'_id': $(event.currentTarget).attr('data-id')})
+      },
+      'click .remove': function(event) {
+        //console.log('data-id:', $(event.currentTarget).attr('data-id'))
+        //debugger
+        History.remove({'_id': $(event.currentTarget).attr('data-id')})
       }
     })
 }
