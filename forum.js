@@ -48,7 +48,7 @@ if (Meteor.isClient) {
         }
       },
       'click a': function(event) {
-        Session.set('selectedCustomer', $(event.currentTarget).data('id'))
+        Session.set('selectedCustomer', $(event.currentTarget).attr('data-id'))
       }
     })
 
@@ -78,9 +78,9 @@ if (Meteor.isClient) {
 
     Template.history.events({
       'click .btn': function(event) {
-        //console.log('data-id:', $(event.currentTarget).data('id'))
+        //console.log('data-id:', $(event.currentTarget).attr('data-id'))
         //debugger
-        Meteor.call('addCustomerUpdate', $(event.currentTarget).data('id'), $('#inputCustomerUpdate').val())
+        Meteor.call('addCustomerUpdate', $(event.currentTarget).attr('data-id'), $('#inputCustomerUpdate').val())
         $('#inputCustomerUpdate').val('')
       }
     })
