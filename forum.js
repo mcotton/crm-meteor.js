@@ -10,7 +10,7 @@ Meteor.methods({
                                   'custUpdate': custUpdate,
                                   'domain': domain,
                                   'custDate': [new Date().toDateString(), new Date().toLocaleTimeString()].join(' ')})
-    console.log('result:', result)
+    //console.log('result:', result)
     return result
   }
 })
@@ -26,12 +26,12 @@ if (Meteor.isClient) {
                 , function(item) { return item.name });
             }
         },
-        last5Updates: function() {
+        last10Updates: function() {
           if(Meteor.user() && Meteor.user().emails[0] && Meteor.user().emails[0].address) {
             var domain = Meteor.user().emails[0].address.split('@')[1]
             // sort results by date, desc
             return _.sortBy(
-              History.find({},{sort: {'custDate': -1}, limit: 5}).fetch()
+              _.uniq(History.find({},{sort: {'custDate': -1}, limit: 10}).fetch())
               , function(item) { return -item.custDate });
           }
         }
@@ -60,7 +60,6 @@ if (Meteor.isClient) {
           Session.set('selectedCustomerLastItem', result.lastItem)
           var history = History.find({'custID': Session.get('selectedCustomer') }).fetch()
           result.history = history
-          console.log('result:', result)
           return result
         }
         return null
@@ -84,7 +83,7 @@ if (Meteor.isClient) {
         $('#inputCustomerUpdate').val('')
       },
       'click .edit': function(event) {
-        console.log('data-id:', $(event.currentTarget).attr('data-id'))
+        //console.log('data-id:', $(event.currentTarget).attr('data-id'))
         //debugger
         //History.remove({'_id': $(event.currentTarget).attr('data-id')})
       },

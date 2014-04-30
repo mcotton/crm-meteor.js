@@ -110,8 +110,8 @@
 
   <template name="customers">
       <ul class="nav nav-list">
-          <li class="nav-header">Last 5 Updates</li>
-            {{#each last5Updates}}
+          <li class="nav-header">Last 10 Updates</li>
+            {{#each last10Updates}}
               <li><a href="#history" data-id="{{custID}}">{{custDate}}</a></li>
             {{/each}}
           <hr>
