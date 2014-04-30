@@ -90,7 +90,9 @@ if (Meteor.isClient) {
       'click .remove': function(event) {
         //console.log('data-id:', $(event.currentTarget).attr('data-id'))
         //debugger
-        History.remove({'_id': $(event.currentTarget).attr('data-id')})
+        if(confirm('Are you sure you want to delete this?')) {
+          History.remove({'_id': $(event.currentTarget).attr('data-id')})
+        }
       }
     })
 }
