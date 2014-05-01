@@ -33,12 +33,12 @@ if (Meteor.isClient) {
                 , function(item) { return item.name });
             }
         },
-        last10Updates: function() {
+        last25Updates: function() {
           if(Meteor.user() && Meteor.user().emails[0] && Meteor.user().emails[0].address) {
             var domain = Meteor.user().emails[0].address.split('@')[1]
             // sort results by date, desc
             return _.sortBy(
-              _.uniq(History.find({},{sort: {'custDate': 1}, limit: 10}).fetch())
+              _.uniq(History.find({},{sort: {'custDate': 1}, limit: 25}).fetch())
               , function(item) { return new Date(item.custDate) }).reverse();
           }
         }
