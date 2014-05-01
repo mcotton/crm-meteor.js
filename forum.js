@@ -8,8 +8,6 @@ Meteor.methods({
     if(query === undefined) {
       query = Customers.insert({ 'name': custName, 'domain': domain})
     }
-
-    Session.set('selectedCustomer', query._id)
     return query
   },
   'addCustomerUpdate': function(custID, custUpdate, domain) {
@@ -49,7 +47,9 @@ if (Meteor.isClient) {
         if($('#inputCustomerName').val().length > 0) {
           if(Meteor.user() && Meteor.user().emails[0] && Meteor.user().emails[0].address) {
             var domain = Meteor.user().emails[0].address.split('@')[1]
-            Meteor.call('addNewCustomer', $('#inputCustomerName').val(), domain)
+            Meteor.call('addNewCustomer', $('#inputCustomerName').val(), domain, function(err, ret) {
+              Session.set('selectedCustomer', ret)
+            })
             $('#inputCustomerName').val('')
           }
         }
@@ -86,7 +86,10 @@ if (Meteor.isClient) {
       'click .btn': function(event) {
         //console.log('data-id:', $(event.currentTarget).attr('data-id'))
         //debugger
-        Meteor.call('addCustomerUpdate', $(event.currentTarget).attr('data-id'), $('#inputCustomerUpdate').val())
+        var result = Meteor.call('addCustomerUpdate',
+                                    $(event.currentTarget).attr('data-id'),
+                                    $('#inputCustomerUpdate').val())
+        Session.set('selectedCustomer', result)
         $('#inputCustomerUpdate').val('')
       },
       'click .edit': function(event) {
