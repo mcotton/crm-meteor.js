@@ -3,7 +3,14 @@ History = new Meteor.Collection('history');
 
 Meteor.methods({
   'addNewCustomer': function(custName, domain) {
-    return Customers.insert({ 'name': custName, 'domain': domain})
+    // check that there isn't already a customer named that
+    var query = Customers.findOne({'name': custName, 'domain': domain})
+    if(query === undefined) {
+      query = Customers.insert({ 'name': custName, 'domain': domain})
+    }
+
+    Session.set('selectedCustomer', query._id)
+    return query
   },
   'addCustomerUpdate': function(custID, custUpdate, domain) {
     var result = History.insert({ 'custID': custID,
@@ -31,8 +38,8 @@ if (Meteor.isClient) {
             var domain = Meteor.user().emails[0].address.split('@')[1]
             // sort results by date, desc
             return _.sortBy(
-              _.uniq(History.find({},{sort: {'custDate': -1}, limit: 10}).fetch())
-              , function(item) { return -item.custDate });
+              _.uniq(History.find({},{sort: {'custDate': 1}, limit: 10}).fetch())
+              , function(item) { return new Date(item.custDate) }).reverse();
           }
         }
     })
