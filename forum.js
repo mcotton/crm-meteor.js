@@ -61,6 +61,12 @@ if (Meteor.isClient) {
         if(confirm('Are you sure you want to delete this?')) {
           Customers.remove({'_id': $(event.currentTarget).attr('data-id')})
         }
+      },
+      'mouseover .customers': function(event) {
+        $(event.currentTarget).find('.remove').css('visibility', 'visible')
+      },
+      'mouseout .customers': function(event) {
+        $(event.currentTarget).find('.remove').css('visibility', 'hidden')
       }
     })
 
