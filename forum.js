@@ -56,6 +56,11 @@ if (Meteor.isClient) {
       },
       'click a': function(event) {
         Session.set('selectedCustomer', $(event.currentTarget).attr('data-id'))
+      },
+      'click .remove': function(event) {
+        if(confirm('Are you sure you want to delete this?')) {
+          Customers.remove({'_id': $(event.currentTarget).attr('data-id')})
+        }
       }
     })
 
