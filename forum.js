@@ -37,7 +37,7 @@ if (Meteor.isClient) {
             // sort results by date, desc
             return _.sortBy(
               _.uniq(History.find({},{sort: {'custDate': 1}, limit: 25}).fetch())
-              , function(item) { return new Date(item.custDate) }).reverse();
+              , function(item) { return new Date(item.custDate).toLocaleString() }).reverse();
           }
         }
     })
