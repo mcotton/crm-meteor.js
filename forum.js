@@ -11,12 +11,10 @@ Meteor.methods({
     return query
   },
   'addCustomerUpdate': function(custID, custUpdate, domain) {
-    var result = History.insert({ 'custID': custID,
-                                  'custUpdate': custUpdate,
-                                  'domain': domain,
-                                  'custDate': [new Date().toDateString(), new Date().toLocaleTimeString()].join(' ')})
-    //console.log('result:', result)
-    return result
+    return History.insert({ 'custID': custID,
+                            'custUpdate': custUpdate,
+                            'domain': domain,
+                            'custDate': new Date().toISOString()})
   }
 })
 
@@ -37,7 +35,7 @@ if (Meteor.isClient) {
             // sort results by date, desc
             return _.sortBy(
               _.uniq(History.find({},{sort: {'custDate': 1}, limit: 25}).fetch())
-              , function(item) { return new Date(item.custDate).toLocaleString() }).reverse();
+              , function(item) { return new Date(item.custDate) }).reverse();
           }
         }
     })
@@ -93,10 +91,20 @@ if (Meteor.isClient) {
       }
     })
 
+    Template.listItemHistory.rendered = function() {
+      setTimeout( function() {
+        $(".timeago").timeago();
+      }, 1000);
+    }
+
+    Template.listItemCustomer.rendered = function() {
+      setTimeout( function() {
+        $(".timeago").timeago();
+      }, 1000);
+    }
+
     Template.history.events({
       'click .btn': function(event) {
-        //console.log('data-id:', $(event.currentTarget).attr('data-id'))
-        //debugger
         var result = Meteor.call('addCustomerUpdate',
                                     $(event.currentTarget).attr('data-id'),
                                     $('#inputCustomerUpdate').val())
@@ -104,13 +112,9 @@ if (Meteor.isClient) {
         $('#inputCustomerUpdate').val('')
       },
       'click .edit': function(event) {
-        //console.log('data-id:', $(event.currentTarget).attr('data-id'))
-        //debugger
-        //History.remove({'_id': $(event.currentTarget).attr('data-id')})
+
       },
       'click .remove': function(event) {
-        //console.log('data-id:', $(event.currentTarget).attr('data-id'))
-        //debugger
         if(confirm('Are you sure you want to delete this?')) {
           History.remove({'_id': $(event.currentTarget).attr('data-id')})
         }

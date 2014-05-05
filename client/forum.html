@@ -1,6 +1,6 @@
   <head>
     <meta charset="utf-8">
-    <title>Meteor.js Example</title>
+    <title>eenBlah - Meteor.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -84,16 +84,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Blah</a>
+          <a class="brand" href="#">eenBlah</a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right" style="margin-right: 137px;">
               <!-- Logged in as <a href="#" class="navbar-link">Username</a> -->
               {{>loginButtons}}
             </p>
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li class="active"><a href="#"></a></li>
+              <li><a href="#about"></a></li>
+              <li><a href="#contact"></a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -123,14 +123,12 @@
       <ul class="nav nav-list">
           <li class="nav-header" data-class="updates">Last 25 Updates</li>
             {{#each last25Updates}}
-              <li class="updates"><a href="#history" data-id="{{custID}}">{{custDate}}</a></li>
+              {{> listItemHistory}}
             {{/each}}
           <hr>
           <li class="nav-header" data-class="customers">Customers</li>
             {{#each listCustomers}}
-              <li class="customers"><a href="#history" data-id="{{_id}}">{{name}}</a>
-                <a href="#"><i  data-id="{{_id}}" class="remove icon-remove-sign"></i></a>
-              </li>
+              {{> listItemCustomer}}
             {{/each}}
           <hr>
           <form class="form">
@@ -146,6 +144,18 @@
       </ul>
   </template>
 
+  <template name="listItemHistory">
+    <li class="updates">
+      <a href="#history" class="timeago" data-id="{{custID}}" title="{{custDate}}">{{custDate}}</a>
+    </li>
+  </template>
+
+  <template name="listItemCustomer">
+    <li class="customers"><a href="#history" data-id="{{_id}}">{{name}}</a>
+      <a href="#"><i  data-id="{{_id}}" class="remove icon-remove-sign"></i></a>
+    </li>
+  </template>
+
   <template name="history">
     {{#with showDetail}}
       <hr>
@@ -154,7 +164,7 @@
         <ul>
         {{#each history}}
           <li>
-            <p>{{custDate}}
+            <p><abbr class="timeago" title="{{custDate}}">{{custDate}}</abbr>
               <a href="#"><i  data-id="{{_id}}" class="edit icon-pencil"></i></a>
               <a href="#"><i  data-id="{{_id}}" class="remove icon-remove-sign"></i></a>
             </p>
