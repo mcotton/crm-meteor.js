@@ -33,6 +33,7 @@ textarea {
 
 .customers .remove {
   visibility: hidden;
+  float: right;
 }
 
 @media (max-width: 980px) {
