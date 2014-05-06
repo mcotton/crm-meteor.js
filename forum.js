@@ -75,6 +75,7 @@ if (Meteor.isClient) {
           Session.set('selectedCustomerName', result.name)
           Session.set('selectedCustomerLastItem', result.lastItem)
           var history = History.find({'custID': Session.get('selectedCustomer') }).fetch()
+          history.forEach(function(item) { item.custDate = new Date(item.custDate).toLocaleString() })
           result.history = history
           return result
         }
