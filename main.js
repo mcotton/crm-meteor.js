@@ -33,9 +33,10 @@ if (Meteor.isClient) {
           if(Meteor.user() && Meteor.user().emails[0] && Meteor.user().emails[0].address) {
             var domain = Meteor.user().emails[0].address.split('@')[1]
             // sort results by date, desc
-            return _.sortBy(
-              _.uniq(History.find({},{sort: {'custDate': 1}, limit: 25}).fetch())
-              , function(item) { return new Date(item.custDate) }).reverse();
+
+            return _.first(_.sortBy(
+              _.uniq(History.find({},{sort: {'custDate': 1}}).fetch())
+              , function(item) { return new Date(item.custDate) }).reverse(), 25)
           }
         }
     })
