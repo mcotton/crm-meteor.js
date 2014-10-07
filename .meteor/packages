@@ -8,4 +8,4 @@ autopublish
 accounts-ui
 accounts-password
 bootstrap
-timeago
+joshowens:timeago@0.0.3
