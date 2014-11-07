@@ -13,7 +13,7 @@ Meteor.methods({
   'addCustomerUpdate': function(custID, custUpdate, domain) {
     return History.insert({ 'custID': custID,
                             'custUpdate': custUpdate,
-                            'domain': domain,
+                            'domain': domain || 'eagleeyenetworks.com',
                             'custDate': new Date().toISOString()})
   }
 })
@@ -35,7 +35,7 @@ if (Meteor.isClient) {
             // sort results by date, desc
 
             return _.first(_.sortBy(
-              _.uniq(History.find({},{sort: {'custDate': 1}}).fetch())
+              _.uniq(History.find({'domain': domain},{sort: {'custDate': 1}}).fetch())
               , function(item) { return new Date(item.custDate) }).reverse(), 25)
           }
         }
